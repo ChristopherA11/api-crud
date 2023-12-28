@@ -9,10 +9,9 @@ class Api::V1::MobilesController < ApplicationController
     def show
       render json: @mobile
     end
-  
     def create
-      @mobile = Mobile.new(mobile_params)
-       
+      permitted_params = params.require(:addMobiles).permit(:model, :brand, :price, :spec)
+      @mobile = Mobile.new(permitted_params)
   
       if @mobile.save
         render json: @mobile, status: :created
@@ -22,11 +21,16 @@ class Api::V1::MobilesController < ApplicationController
     end
   
     def update
-      mobile = Mobile.find(params[:id])
-      if @mobile.update(mobile_params)
-        render json: @mobile
+      @mobile = Mobile.find_by(id: params[:id])
+  
+      if @mobile.nil?
+        render json: { error: 'Mobile not found' }, status: :not_found
       else
-        render json: @mobile.errors, status: :unprocessable_entity
+        if @mobile.update(mobile_params)
+          render json: @mobile, status: :ok
+        else
+          render json: { error: @mobile.errors.full_messages.join(', ') }, status: :unprocessable_entity
+        end
       end
     end
 
@@ -44,8 +48,14 @@ class Api::V1::MobilesController < ApplicationController
     
   
     private
-  
+
     def mobile_params
      params.require(:addMobiles).permit(:model, :brand, :price, :spec)
     end
+    
+    private 
+
+    def mobile_params
+      params.require(:editMobile).permit(:model, :brand, :price, :spec, :editMobile)
   end
+end

@@ -4,7 +4,7 @@ import api from './api'
 
 const EditMobiles = ({mobiles,setMobiles}) => {
     const {id} = useParams()
-    console.log(id);
+  
     const mobile = mobiles.find(mobi => (mobi.id).toString() === id)
 
     const [editMobile, setEditMobile] = useState({
@@ -29,7 +29,7 @@ const EditMobiles = ({mobiles,setMobiles}) => {
       const handleEdit = async (id) =>{
         const updateMobile = {id,editMobile}
         try {
-         const response = await api.patch(`/api/v1/mobiles/${id}`,updateMobile)
+         const response = await api.put(`/api/v1/mobiles/${id}`,updateMobile)
          const updateMobiles = mobiles.map((mobi) => mobi.id === id ? {...response.data} : mobi)
          setMobiles(updateMobiles)
          navigate('/')

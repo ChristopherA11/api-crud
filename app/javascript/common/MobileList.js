@@ -1,20 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const MobileList = ({mobiles, handleDelete }) => {
-  
+const MobileList = ({ mobiles, handleDelete }) => {
 
   return (
     <div>
-
-         <table>
+      <table>
         <thead>
-        <tr>
-          <th>Model</th>
-          <th>Brand</th>
-          <th>Price</th>
-          <th>spec</th>
-        </tr>
+          <tr>
+            <th>Model</th>
+            <th>Brand</th>
+            <th>Price</th>
+            <th>spec</th>
+          </tr>
         </thead>
         <tbody>
           {mobiles.map((item) => (
@@ -24,14 +22,14 @@ const MobileList = ({mobiles, handleDelete }) => {
               <td>{item.price}</td>
               <td>{item.spec}</td>
               <td>
-               <span> <button onClick={() => handleDelete(item.id)}>Delete</button></span> 
-               <span> <Link to={`edit/${item.id}`}>Edit</Link></span>
+                <span> <button onClick={() => handleDelete(item.id)}>Delete</button></span>
+                <span> <Link to={`edit/${item.id}`}>Edit</Link></span>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      
+
     </div>
   )
 }
