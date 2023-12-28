@@ -3,7 +3,6 @@ import Post from './Post'
 import { Route, Routes } from 'react-router'
 import EditMobiles from './EditMobiles'
 import Home from './Home'
-// import apiRequest from './apiRequest'
 import Nav from './Nav'
 import api from './api'
 
@@ -13,7 +12,7 @@ const App = () => {
   
   const fetchMobiles = async () => {
       try{
-        const response = await api.get('api/v1/mobiles')
+        const response = await api.get('/mobiles')
         setMobiles(response.data)
         }
       catch(err){
@@ -26,7 +25,7 @@ const App = () => {
 
   const handleDelete = async (id) => {
     try{
-      await api.delete(`api/v1/mobiles/${id}`)
+      await api.delete(`/mobiles/${id}`)
       const deletedApp = mobiles.filter(item => item.id !== id)
       setMobiles(deletedApp)
     }

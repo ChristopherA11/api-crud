@@ -18,7 +18,7 @@ const Post = ({mobiles, setMobiles}) => {
     const id = mobiles.length ? mobiles[mobiles.length - 1].id + 1: 1;
     const allMobile = {id,addMobiles}
     try{
-      const response = await api.post('api/v1/mobiles',allMobile)
+      const response = await api.post('/mobiles',allMobile)
       const mobile = [...mobiles,response.data]
       setMobiles(mobile)
       navigate("/")

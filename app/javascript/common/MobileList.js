@@ -23,7 +23,8 @@ const MobileList = ({ mobiles, handleDelete }) => {
               <td>{item.spec}</td>
               <td>
                 <span> <button onClick={() => handleDelete(item.id)}>Delete</button></span>
-                <span> <Link to={`edit/${item.id}`}>Edit</Link></span>
+                <span> <Link to={`edit/${item.id}`}><button>Edit
+                </button></Link></span>
               </td>
             </tr>
           ))}
