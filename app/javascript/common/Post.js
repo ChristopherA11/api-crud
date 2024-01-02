@@ -4,13 +4,8 @@ import PostForm from './PostForm'
 import api from './api'
 
 
-const Post = ({mobiles, setMobiles}) => {
-  const [addMobiles, setAddMobiles] = useState({
-    model:"",
-    brand:"",
-    price: 0,
-    spec: ""
-  })
+const Post = ({mobiles, setMobiles,addMobiles, setAddMobiles}) => {
+  
  const navigate = useNavigate()
  
   const handleSubmit = async(e) => {

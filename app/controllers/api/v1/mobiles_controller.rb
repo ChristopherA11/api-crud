@@ -22,15 +22,11 @@ class Api::V1::MobilesController < ApplicationController
   
     def update
       @mobile = Mobile.find_by(id: params[:id])
-  
-      # if @mobile.nil?
-      #   render json: { error: 'Mobile not found' }, status: :not_found
-      # else
+
         if @mobile.update(mobile_params)
           render json: @mobile, status: :ok
         else
-          render json: { error: @mobile.errors.full_messages.join(', ') }, status: :unprocessable_entity
-        # end
+          render json: { error: @mobile.errors.full_messages }, status: :unprocessable_entity
       end
     end
 
@@ -52,10 +48,4 @@ class Api::V1::MobilesController < ApplicationController
     def mobile_params
      params.require(:addMobiles).permit(:model, :brand, :price, :spec)
     end
-    
-    private 
-
-    def mobile_params
-      params.require(:editMobile).permit(:model, :brand, :price, :spec, :editMobile)
-  end
 end

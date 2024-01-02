@@ -1,9 +1,9 @@
 import React from 'react'
 
-const PostForm = ({addMobiles, setAddMobiles, handleSubmit}) => {
-
+const PostForm = ({addMobiles, setAddMobiles, handleSubmit,mobile,handleEdit}) => {
     const handelChangeModel = (e) => {
         setAddMobiles({...addMobiles,model:e.target.value})
+
       }
     
       const handelChangeBrand = (e) => {
@@ -19,7 +19,8 @@ const PostForm = ({addMobiles, setAddMobiles, handleSubmit}) => {
       }
   return (
     <div>
-         <form onSubmit={handleSubmit}>
+  
+         <form onSubmit={(e) => e.preventDefault()}>
         <label htmlFor="model">Model:</label>
         <input
           type="text"
@@ -56,10 +57,13 @@ const PostForm = ({addMobiles, setAddMobiles, handleSubmit}) => {
           value={addMobiles.spec}
           onChange={handelChangeSpec}
         />
-        <button type='submit'>submit</button>
+        {handleSubmit ? <button type='submit' onClick={handleSubmit}>submit</button> :
+        <button onClick={() => handleEdit(mobile.id)}>submit</button>}
       </form>
+      
+     
     </div>
   )
 }
 
-export default PostForm
+export default PostForm;

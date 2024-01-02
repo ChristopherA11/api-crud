@@ -1,23 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import api from './api'
+import PostForm from './PostForm'
 
-const EditMobiles = ({mobiles,setMobiles}) => {
+const EditMobiles = ({mobiles,setMobiles, addMobiles, setAddMobiles}) => {
     const {id} = useParams()
     const mobile = mobiles.find(mobi => (mobi.id).toString() === id)
 
-    const [editMobile, setEditMobile] = useState({
-        model:"",
-        brand:"",
-        price:0,
-        spec:""
-    })
     const navigate = useNavigate()
 
     useEffect(() => {
     
         if (mobile) {
-          setEditMobile({
+          setAddMobiles({
             model: mobile.model,
             brand: mobile.brand,
             price: mobile.price,
@@ -27,7 +22,7 @@ const EditMobiles = ({mobiles,setMobiles}) => {
       }, [mobile]);
 
       const handleEdit = async (id) =>{
-        const updateMobile = {id,editMobile}
+        const updateMobile = {id,addMobiles}
         try {
          const response = await api.patch(`/mobiles/${id}`,updateMobile)
          const updateMobiles = mobiles.map((mobi) => mobi.id === id ? {...response.data} : mobi)
@@ -38,33 +33,10 @@ const EditMobiles = ({mobiles,setMobiles}) => {
          console.log(err.message);
         }
      }
-   
-
-    const editModel = (e) => {
-        setEditMobile({...editMobile,model:e.target.value})
-    }
-    const editBrand = (e) => {
-        setEditMobile({...editMobile,brand:e.target.value})
-    }
-    const editPrice = (e) => {
-        setEditMobile({...editMobile,price:e.target.value})
-    }
-    const editSpec = (e) => {
-        setEditMobile({...editMobile,spec:e.target.value})
-    }
+    
   return (
-    <div>
-        <form onSubmit={(e) => e.preventDefault()}>
-            <label>Model:</label>
-            <input value={editMobile.model} onChange = {editModel}/>
-            <label>Brand:</label>
-            <input value={editMobile.brand} onChange={editBrand}/>
-            <label>Price:</label>
-            <input value={editMobile.price} onChange={editPrice}/>
-            <label>Spec:</label>
-            <input value={editMobile.spec} onChange={editSpec}/>
-            <button type='submit' onClick={() => handleEdit(mobile.id)}>submit</button>
-        </form>
+    <div> 
+        <PostForm addMobiles={addMobiles} setAddMobiles={setAddMobiles} handleEdit={handleEdit} mobile={mobile}/>
     </div>
   )
 }
