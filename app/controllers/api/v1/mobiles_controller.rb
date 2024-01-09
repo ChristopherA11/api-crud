@@ -10,7 +10,7 @@ class Api::V1::MobilesController < ApplicationController
       render json: @mobile
     end
     def create
-      permitted_params = params.require(:addMobiles).permit(:model, :brand, :price, :spec)
+      permitted_params = params.require(:mobile).permit(:model, :brand, :price, :spec)
       @mobile = Mobile.new(permitted_params)
   
       if @mobile.save
@@ -21,7 +21,7 @@ class Api::V1::MobilesController < ApplicationController
     end
   
     def update
-      @mobile = Mobile.find_by(id: params[:id])
+      @mobile = Mobile.find(params[:id])
 
         if @mobile.update(mobile_params)
           render json: @mobile, status: :ok
@@ -46,6 +46,6 @@ class Api::V1::MobilesController < ApplicationController
     private
 
     def mobile_params
-     params.require(:addMobiles).permit(:model, :brand, :price, :spec)
+     params.require(:mobile).permit(:model, :brand, :price, :spec)
     end
 end

@@ -1,7 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { deleteMobile } from '../mobiles/mobileActions'
+import { useDispatch, useSelector } from 'react-redux'
 
-const MobileList = ({ mobiles, handleDelete }) => {
+const MobileList = () => {
+  const {mobiles} = useSelector((state) => state.mobiles)
+   const dispatch = useDispatch()
+
+  const handleDelete = (id) => {
+    dispatch(deleteMobile(id))
+  }
 
   return (
     <div>
@@ -34,5 +42,6 @@ const MobileList = ({ mobiles, handleDelete }) => {
     </div>
   )
 }
+
 
 export default MobileList

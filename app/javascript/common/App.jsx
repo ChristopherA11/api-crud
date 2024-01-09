@@ -3,52 +3,39 @@ import Post from './Post'
 import { Route, Routes } from 'react-router'
 import EditMobiles from './EditMobiles'
 import Home from './Home'
-import Nav from './Nav'
-import api from './api'
+// import api from './api'
+import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchMobiles } from '../mobiles/mobileActions'
 
 
 const App = () => {
-  const [mobiles, setMobiles] = useState([])
+  const {mobiles} = useSelector((state) => state.mobiles)
+  const dispatch = useDispatch()
+
   const [addMobiles, setAddMobiles] = useState({
     model:"",
     brand:"",
-    price: 0,
-    spec: ""
+    price:0,
+    spec:""
   })
-  
-  const fetchMobiles = async () => {
-      try{
-        const response = await api.get('/mobiles')
-        setMobiles(response.data)
-        }
-      catch(err){
-        console.log(err.message);
-      }
-  }
-  useEffect(() => {
-    fetchMobiles()
-  },[])
 
-  const handleDelete = async (id) => {
-    try{
-      await api.delete(`/mobiles/${id}`)
-      const deletedApp = mobiles.filter(item => item.id !== id)
-      setMobiles(deletedApp)
-    }
-    catch(err){
-      console.log(err.message);
-    } 
-  }
+  useEffect(() => {
+    dispatch(fetchMobiles())
+  },[dispatch])
+
 
   return (
     <div>
-      <Nav />
+      <nav>
+        <span><Link to={"/"}>Home</Link></span>
+        <span><Link to={"/post"}>Post</Link></span>
+      </nav>
       <Routes>
-      <Route path="/" element={<Home mobiles={mobiles}
-        handleDelete={handleDelete}/>}/>   
-     <Route path='post' element={ <Post addMobiles={addMobiles} setAddMobiles={setAddMobiles} mobiles={mobiles} setMobiles={setMobiles}/>}/>
-     <Route path="edit/:id" element = {<EditMobiles addMobiles={addMobiles} setAddMobiles={setAddMobiles} mobiles={mobiles} setMobiles={setMobiles} />}/>
-
+      <Route path="/" element={<Home />}/>   
+      <Route path="/post" element={<Post addMobiles={addMobiles} setAddMobiles={setAddMobiles} />}/>
+      <Route path="/edit/:id" element={<EditMobiles 
+      addMobiles={addMobiles} setAddMobiles={setAddMobiles} mobiles={mobiles} />}/>
       </Routes>
     </div>
   )

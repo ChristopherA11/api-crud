@@ -1,6 +1,8 @@
 import React from 'react'
 
-const PostForm = ({addMobiles, setAddMobiles, handleSubmit,mobile,handleEdit}) => {
+const PostForm = ({handleSubmit, mobile,addMobiles, setAddMobiles, handleEdit}) => {
+
+ 
     const handelChangeModel = (e) => {
         setAddMobiles({...addMobiles,model:e.target.value})
 
@@ -20,7 +22,8 @@ const PostForm = ({addMobiles, setAddMobiles, handleSubmit,mobile,handleEdit}) =
   return (
     <div>
   
-         <form onSubmit={(e) => e.preventDefault()}>
+         {/* <form onSubmit={(e) => e.preventDefault()}> */}
+         
         <label htmlFor="model">Model:</label>
         <input
           type="text"
@@ -57,9 +60,9 @@ const PostForm = ({addMobiles, setAddMobiles, handleSubmit,mobile,handleEdit}) =
           value={addMobiles.spec}
           onChange={handelChangeSpec}
         />
-        {handleSubmit ? <button type='submit' onClick={handleSubmit}>submit</button> :
-        <button onClick={() => handleEdit(mobile.id)}>submit</button>}
-      </form>
+        {handleSubmit ? <button type='submit' onClick={() => handleSubmit(addMobiles)}>submit</button> :
+        <button onClick={() => handleEdit(mobile.id,addMobiles)}>submit</button>}
+      {/* </form> */}
       
      
     </div>

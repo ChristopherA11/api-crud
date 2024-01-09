@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
-import api from './api'
+import {  useNavigate, useParams } from 'react-router-dom'
 import PostForm from './PostForm'
+import { updateMobile } from '../mobiles/mobileActions'
+import { useDispatch, useSelector } from 'react-redux'
 
-const EditMobiles = ({mobiles,setMobiles, addMobiles, setAddMobiles}) => {
+const EditMobiles = ({ addMobiles, setAddMobiles}) => {
+  const dispatch = useDispatch()
     const {id} = useParams()
-    const mobile = mobiles.find(mobi => (mobi.id).toString() === id)
-
+    const mobile = useSelector((state) =>
+    state.mobiles.mobiles.find((mobi) => mobi.id.toString() === id)
+  );
     const navigate = useNavigate()
 
+
     useEffect(() => {
-    
         if (mobile) {
           setAddMobiles({
             model: mobile.model,
@@ -21,17 +24,10 @@ const EditMobiles = ({mobiles,setMobiles, addMobiles, setAddMobiles}) => {
         }
       }, [mobile]);
 
-      const handleEdit = async (id) =>{
-        const updateMobile = {id,addMobiles}
-        try {
-         const response = await api.patch(`/mobiles/${id}`,updateMobile)
-         const updateMobiles = mobiles.map((mobi) => mobi.id === id ? {...response.data} : mobi)
-         setMobiles(updateMobiles)
-         navigate('/')
-        }    
-        catch(err){
-         console.log(err.message);
-        }
+      const handleEdit =  (id,updatedMobile) =>{
+      
+      dispatch(updateMobile(id,updatedMobile))
+      navigate("/")
      }
     
   return (

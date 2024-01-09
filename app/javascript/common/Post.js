@@ -1,34 +1,23 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router'
-import PostForm from './PostForm'
-import api from './api'
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import PostForm from './PostForm';
+import { addMobile } from '../mobiles/mobileActions';
 
+const Post = ({setAddMobiles, addMobiles}) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-const Post = ({mobiles, setMobiles,addMobiles, setAddMobiles}) => {
-  
- const navigate = useNavigate()
- 
-  const handleSubmit = async(e) => {
-    e.preventDefault()
-    const id = mobiles.length ? mobiles[mobiles.length - 1].id + 1: 1;
-    const allMobile = {id,addMobiles}
-    try{
-      const response = await api.post('/mobiles',allMobile)
-      const mobile = [...mobiles,response.data]
-      setMobiles(mobile)
-      navigate("/")
-    }
-    catch(err){
-      console.log(err.message);
-    }
-    }
+  const handleSubmit = (newMobile) => {
+    dispatch(addMobile(newMobile));
+    navigate('/');
+  };
+
   return (
     <div>
-  
-     <PostForm addMobiles={addMobiles} setAddMobiles={setAddMobiles} handleSubmit={handleSubmit}/>
-    
+      <PostForm handleSubmit={handleSubmit} setAddMobiles={setAddMobiles} addMobiles={addMobiles} />
     </div>
-  )
-}
+  );
+};
 
-export default Post
+export default Post;
