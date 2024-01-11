@@ -24,8 +24,7 @@ const EditMobiles = ({ addMobiles, setAddMobiles}) => {
         }
       }, [mobile]);
 
-      const handleEdit =  (id,updatedMobile) =>{
-      
+      const handleEdit =  (id,updatedMobile) =>{ 
       dispatch(updateMobile(id,updatedMobile))
       navigate("/")
      }

@@ -5,7 +5,7 @@ import {
   DELETE_MOBILE_SUCCESS,
   ADD_MOBILE_SUCCESS,
   UPDATE_MOBILE_SUCCESS,
-  FETCH_MOBILE_FAILURE,
+  SEARCH_MOBILE_SUCCESS,
 } from '../mobiles/mobileActionTypes';
 
 export const fetchMobilesSuccess = (mobiles) => {
@@ -64,15 +64,28 @@ export const updateMobileSuccess = (updatedMobile) => {
   }
 };
 
-export const updateMobile = (id, updatedMobile) =>{
-  return async(dispatch) =>{
+export const updateMobile = (id, updatedMobile) => async (dispatch) =>{
   try {
     const response = await api.patch(`/mobiles/${id}`,updatedMobile);
     dispatch(updateMobileSuccess(response.data));
   } catch (err) {
     console.log(err.message)
   }
-}
 };
+
+export const searchMobileSuccess = (searchMobile) => {
+   return {
+    type:SEARCH_MOBILE_SUCCESS,
+    payload:searchMobile
+   }
+};
+
+export const searchMobile = (model, brand, price, spec) => (dispatch) => {
+  console.log(model);
+  dispatch(searchMobileSuccess({model, brand, price, spec}))
+}
+
+
+
 
 

@@ -6,3 +6,7 @@ class HomePageControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 end
+
+
+
+

@@ -8,6 +8,7 @@ import App from "../common/App"
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import  store  from "../common/store";
+// import HelloWorld from "../common/HelloWorld";
 
 
 
@@ -16,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <Provider store={store()}>
       <BrowserRouter>
         <App />
+        {/* <HelloWorld/> */}
       </BrowserRouter>
     </Provider>,
     document.body.appendChild(document.createElement("div"))

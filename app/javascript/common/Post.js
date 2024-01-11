@@ -5,13 +5,7 @@ import PostForm from './PostForm';
 import { addMobile } from '../mobiles/mobileActions';
 
 const Post = ({setAddMobiles, addMobiles}) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const handleSubmit = (newMobile) => {
-    dispatch(addMobile(newMobile));
-    navigate('/');
-  };
+ 
 
   return (
     <div>

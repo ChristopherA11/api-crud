@@ -1,14 +1,22 @@
-import React from 'react'
-import MobileList from './MobileList'
-import { useSelector } from 'react-redux'
+import React from 'react';
+import MobileList from './MobileList';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
-  const {mobiles} = useSelector((state) => state.mobiles)
+  const { mobiles, filterLists, searchResult } = useSelector((state) => state.mobiles);
+
   return (
     <div>
-        {mobiles?.length ? (<MobileList mobiles={mobiles} />): <p>Mobile List Is Empty</p>}
+      {searchResult ? (
+        <MobileList mobiles={filterLists} />
+      ) : (
+        <div>
+          <p>Mobile List:</p>
+          <MobileList mobiles={mobiles} />
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
